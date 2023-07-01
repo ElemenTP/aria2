@@ -1,0 +1,15 @@
+{
+    "cmake.configureOnOpen": false,
+    "cmake.configureArgs": [
+        "-DCMAKE_INTERPROCEDURAL_OPTIMIZATION:BOOL=TRUE",
+        "-DCMAKE_INSTALL_PREFIX:STRING=/opt/homebrew",
+        "-DWITH_APPLETLS=OFF",
+        "-DWITH_LIBGMP=OFF",
+        "-DWITH_OPENSSL=ON",
+        "-DWITH_LIBEXPAT=OFF",
+        "-DOpenSSL_ROOT=/opt/homebrew/opt/openssl@3",
+        "-DSQLite3_ROOT=/opt/homebrew/opt/sqlite3",
+        "-DLibSSH2_ROOT=/opt/homebrew/opt/libssh2",
+        "-DIntl_ROOT=/opt/homebrew/opt/gettext"
+    ]
+}

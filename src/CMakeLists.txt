@@ -1425,6 +1425,15 @@ if(ENABLE_WEBSOCKET)
   target_link_libraries(aria2static PUBLIC wslay)
 endif()
 
+if(HAVE_INTL)
+  target_include_directories(aria2 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../lib)
+  target_include_directories(aria2static PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../lib)
+  target_include_directories(aria2 PUBLIC ${INTL_INCLUDE_DIR})
+  target_include_directories(aria2static PUBLIC ${INTL_INCLUDE_DIR})
+  target_link_libraries(aria2 PUBLIC Intl::Intl)
+  target_link_libraries(aria2static PUBLIC Intl::Intl)
+endif()
+
 if(ARIA2_STATIC)
   set(EXTRALDFLAGS "${EXTRALDFLAGS} -all-static")
   if(MINGW OR MSVC OR APPLE)
@@ -1441,6 +1450,9 @@ install(TARGETS aria2 ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 target_link_libraries(aria2c PRIVATE ${ARIA2C_LINK_TARGET})
 target_link_options(aria2c PUBLIC ${EXTRALDFLAGS})
+if(HAVE_OSX)
+  target_link_libraries(aria2c PUBLIC "-framework Security")
+endif()
 
 
 # ########## install files ###############
