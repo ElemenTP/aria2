@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
 
 project(
-  aria2 
-  VERSION 1.36.0 
+  aria2
+  VERSION 1.37.0
   HOMEPAGE_URL https://aria2.github.io/
   LANGUAGES CXX C
 )
@@ -562,6 +562,9 @@ if(WITH_LIBSSH2)
   if(LIBSSH2_FOUND)
     set(HAVE_LIBSSH2 yes CACHE BOOL "Define if you have LibSSH2" FORCE)
     set(LIBSSH2_CFLAGS "" CACHE STRING "")
+    if(ARIA2_STATIC)
+      set(LIBSSH2_CFLAGS "-DLIBSSH2_API= ${LIBSSH2_CFLAGS}" CACHE STRING "")
+    endif()
     set(LIBSSH2_LIBS ${LIBSSH2_LIBRARIES} CACHE STRING "")
     config_h_add_compile_definitions(HAVE_LIBSSH2=1)
   endif()
@@ -792,7 +795,7 @@ if(ENABLE_NLS)
     set(INTL_CFLAGS "" CACHE STRING "")
     set(INTL_LIBS ${INTL_LIBRARIES} CACHE STRING "")
     config_h_add_compile_definitions(ENABLE_NLS=1)
-    config_h_add_compile_definitions(LOCALEDIR="/opt/homebrew/Cellar/aria2/1.36.0_2/share/locale")
+    config_h_add_compile_definitions(LOCALEDIR="/opt/homebrew/Cellar/aria2/1.37.0/share/locale")
   endif()
 endif()
 
