@@ -56,10 +56,18 @@ typedef SSIZE_T ssize_t;
 #if defined(__MINGW32__) || defined(_MSC_VER)
 #  define WIN32_LEAN_AND_MEAN
 #  ifndef WINVER
+#    ifdef _WIN64
+#    define WINVER 0x601
+#    else
 #    define WINVER 0x501
+#    endif
 #  endif // !WINVER
 #  ifndef _WIN32_WINNT
+#    ifdef _WIN64
+#    define _WIN32_WINNT 0x601
+#    else
 #    define _WIN32_WINNT 0x501
+#    endif
 #  endif // _WIN32_WINNT
 #  ifdef HAVE_WINSOCK2_H
 #    ifndef FD_SETSIZE

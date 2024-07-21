@@ -71,6 +71,12 @@ std::string usedLibs();
 // Returns a summary string of the used compiler/platform.
 std::string usedCompilerAndPlatform();
 
+// Gets version info about Windows, supports Windows 10+
+#ifdef _WIN32
+BOOL GetNtVersionNumbers(DWORD& dwMajorVer, DWORD& dwMinorVer,
+                         DWORD& dwBuildNumber);
+#endif
+
 // Returns the system information about the OS this binary is running on.
 std::string getOperatingSystemInfo();
 

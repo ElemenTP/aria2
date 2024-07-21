@@ -343,12 +343,10 @@ fi
 
 have_wintls=no
 if test "x$with_wintls" = "xyes"; then
+  AC_MSG_CHECKING([whether to enable Windows native SSL/TLS])
   AC_CHECK_LIB([crypt32],[main],[have_wintls_libs=yes],[have_wintls_libs=no],[])ac_cv_lib_crypt32=ac_cv_lib_crypt32_main
-
   AC_CHECK_LIB([secur32],[main],[have_wintls_libs=$have_wintls_libs],[have_wintls_libs=no],[])ac_cv_lib_secur32=ac_cv_lib_secur32_main
-
   AC_CHECK_LIB([advapi32],[main],[have_wintls_libs=$have_wintls_libs],[have_wintls_libs=no],[])ac_cv_lib_advapi32=ac_cv_lib_advapi32_main
-
   AC_CHECK_HEADER([wincrypt.h], [have_wintls_headers=yes], [have_wintls_headers=no], [[
 #ifdef HAVE_WINDOWS_H
 # include <windows.h>
@@ -366,6 +364,7 @@ if test "x$with_wintls" = "xyes"; then
   if test "x$have_wintls_libs" = "xyes" &&
      test "x$have_wintls_headers" = "xyes"; then
     AC_DEFINE([SECURITY_WIN32], [1], [Use security.h in WIN32 mode])
+    AC_DEFINE([HAVE_WINTLS], [1], [Define to 1 if you have Windows TLS])
     WINTLS_LIBS="-lcrypt32 -lsecur32 -ladvapi32"
     AC_SUBST([WINTLS_LIBS])
     have_wintls=yes
@@ -503,18 +502,10 @@ fi
 
 have_libcares=no
 if test "x$with_libcares" = "xyes"; then
-  PKG_CHECK_MODULES([LIBCARES], [libcares >= 1.7.0], [have_libcares=yes],
+  PKG_CHECK_MODULES([LIBCARES], [libcares >= 1.16.0], [have_libcares=yes],
                     [have_libcares=no])
   if test "x$have_libcares" = "xyes"; then
     AC_DEFINE([HAVE_LIBCARES], [1], [Define to 1 if you have libcares.])
-    save_LIBS=$LIBS
-    save_CPPFLAGS=$CPPFLAGS
-    LIBS="$LIBCARES_LIBS $LIBS"
-    CPPFLAGS="$LIBCARES_CFLAGS $CPPFLAGS"
-    AC_CHECK_TYPES([ares_addr_node], [], [], [[#include <ares.h>]])
-    AC_CHECK_FUNCS([ares_set_servers])
-    LIBS=$save_LIBS
-    CPPFLAGS=$save_CPPFLAGS
 
     # -DCARES_STATICLIB is appended by pkg-config file libcares.pc
   else

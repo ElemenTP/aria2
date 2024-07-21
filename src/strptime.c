@@ -419,10 +419,18 @@ static char* _strptime(const char* buf, const char* format, struct tm* timeptr,
             if (0 == strcmp(zonestr, "GMT")) {
               *gmt = 1;
             }
+#ifdef _UCRT
+            else if (0 == strcmp(zonestr, _tzname[0])) {
+#else
             else if (0 == strcmp(zonestr, tzname[0])) {
+#endif
               timeptr->tm_isdst = 0;
             }
+#ifdef _UCRT
+            else if (0 == strcmp(zonestr, _tzname[1])) {
+#else
             else if (0 == strcmp(zonestr, tzname[1])) {
+#endif
               timeptr->tm_isdst = 1;
             }
             else {
