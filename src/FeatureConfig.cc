@@ -214,13 +214,7 @@ std::string usedLibs()
   res += "GnuTLS/" GNUTLS_VERSION " ";
 #endif // HAVE_LIBGNUTLS
 #ifdef HAVE_OPENSSL
-  res += fmt("OpenSSL/%ld.%ld.%ld", OPENSSL_VERSION_NUMBER >> 28,
-             (OPENSSL_VERSION_NUMBER >> 20) & 0xff,
-             (OPENSSL_VERSION_NUMBER >> 12) & 0xff);
-  if ((OPENSSL_VERSION_NUMBER >> 4) & 0xff) {
-    res += 'a' + ((OPENSSL_VERSION_NUMBER >> 4) & 0xff) - 1;
-  }
-  res += " ";
+  res += fmt("OpenSSL/%s ", OPENSSL_VERSION_STR);
 #endif // HAVE_OPENSSL
 #ifdef HAVE_LIBNETTLE
   // No library version in header files.
@@ -273,7 +267,7 @@ std::string usedCompilerAndPlatform()
 
 #elif defined(__GNUG__)
 
-#  ifdef __MINGW32__
+#  if defined(__MINGW32__) || defined(_MSC_VER)
   rv << "mingw ";
 #    ifdef __MINGW32_MAJOR_VERSION
   rv << (int)__MINGW32_MAJOR_VERSION;
