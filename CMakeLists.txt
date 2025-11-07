@@ -795,7 +795,7 @@ if(ENABLE_NLS)
     set(INTL_CFLAGS "" CACHE STRING "")
     set(INTL_LIBS ${INTL_LIBRARIES} CACHE STRING "")
     config_h_add_compile_definitions(ENABLE_NLS=1)
-    config_h_add_compile_definitions(LOCALEDIR="/opt/homebrew/Cellar/aria2/1.37.0/share/locale")
+    config_h_add_compile_definitions(LOCALEDIR="/opt/homebrew/opt/aria2/share/locale")
   endif()
 endif()
 
